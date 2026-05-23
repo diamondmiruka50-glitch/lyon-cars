@@ -33,7 +33,7 @@ function CarSection({ title, cars, isAdmin, deleteCar }) {
             }}
           >
             <img
-              src={`http://localhost:5000/uploads/${car.image}`}
+              src={`https://lyon-cars-api.onrender.com/uploads/${car.image}`}
               alt={car.name}
               style={{
                 width: "100%",
@@ -113,7 +113,7 @@ export default function Inventory() {
   const isAdmin = window.location.pathname === "/admin-inventory";
 
   useEffect(() => {
-    fetch("http://localhost:5000/cars")
+    fetch("https://lyon-cars-api.onrender.com/cars")
       .then((res) => res.json())
       .then((data) => setCars(data))
       .catch((err) => console.log(err));
@@ -125,7 +125,7 @@ export default function Inventory() {
     if (!confirmDelete) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/delete-car/${id}`, {
+      const res = await fetch(`https://lyon-cars-api.onrender.com/delete-car/${id}`, {
         method: "DELETE",
       });
 

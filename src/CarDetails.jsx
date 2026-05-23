@@ -6,7 +6,7 @@ export default function CarDetails() {
   const [car, setCar] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/car/${id}`)
+    fetch(`https://lyon-cars-api.onrender.com/car/${id}`)
       .then((res) => res.json())
       .then((data) => setCar(data))
       .catch((err) => console.log(err));
@@ -33,7 +33,7 @@ export default function CarDetails() {
           car.images.map((img, index) => (
             <img
               key={index}
-              src={`http://localhost:5000/uploads/${img}`}
+              src={`https://lyon-cars-api.onrender.com/uploads/${img}`}
               alt={`car-${index}`}
               style={{
                 width: "100%",

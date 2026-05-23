@@ -151,13 +151,13 @@ export default function App() {
   );
 
   useEffect(() => {
-    fetch("http://localhost:5000/cars")
+    fetch("https://lyon-cars-api.onrender.com/cars")
       .then((res) => res.json())
       .then((data) =>
         setCars(
           data.map((car) => ({
             ...car,
-            image: `http://localhost:5000/uploads/${car.image}`,
+            image: `https://lyon-cars-api.onrender.com/uploads/${car.image}`,
           }))
         )
       );

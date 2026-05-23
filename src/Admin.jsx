@@ -53,7 +53,7 @@ export default function Admin() {
 
       if (editingId) {
         response = await fetch(
-          `http://localhost:5000/update-car/${editingId}`,
+          `https://lyon-cars-api.onrender.com/update-car/${editingId}`,
           {
             method: "PUT",
             headers: {
@@ -73,7 +73,7 @@ export default function Admin() {
           data.append("image", images[i]);
         }
 
-        response = await fetch("http://localhost:5000/add-car", {
+        response = await fetch("https://lyon-cars-api.onrender.com/add-car", {
           method: "POST",
           body: data,
         });
