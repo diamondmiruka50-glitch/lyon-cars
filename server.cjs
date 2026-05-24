@@ -11,10 +11,11 @@ app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
 const db = mysql.createConnection({
-  host: "localhost",
+  host: "containers-us-west-xxx.railway.app",
   user: "root",
-  password: "",
-  database: "lyon_cars",
+  password: "xxxxxxxx",
+  database: "railway",
+  port: 12345,
 });
 
 db.connect((err) => {
