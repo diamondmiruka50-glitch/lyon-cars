@@ -175,29 +175,47 @@ export default function App() {
       }}
     >
       <nav style={navStyle}>
-        <a href="/inventory" style={{ textDecoration: 'none' }}>
-  <h1 style={{ margin: 0, fontSize: 38, color: 'white' }}>
-    <span style={{ color: 'red' }}>LYON</span> CARS
-  </h1>
-</a>
-
-        <div style={menuStyle}>
-          <a href="#in-stock" style={linkStyle}>In Stock</a>
-          <a href="#at-port" style={linkStyle}>At The Port & On Ship</a>
-          <a href="#why-choose-us" style={linkStyle}>Why Choose Us</a>
-          <a href="#contact-us" style={linkStyle}>Contact Us</a>
+        <div style={logoContainer}>
+          <a href="/inventory" style={{ textDecoration: "none" }}>
+            <h1 style={logoStyle}>
+              <span style={{ color: "#e31b23" }}>LYON</span> CARS
+            </h1>
+          </a>
         </div>
 
-        <div style={{ display: "flex", gap: 15 }}>
+        <div style={menuWrapper}>
+          <div style={menuStyle}>
+            <a href="#in-stock" style={linkStyle}>In Stock</a>
+            <a href="#at-port" style={linkStyle}>At The Port & On Ship</a>
+            <a href="#why-choose-us" style={linkStyle}>Why Choose Us</a>
+            <a href="#contact-us" style={linkStyle}>Contact Us</a>
+          </div>
+        </div>
+
+        <div style={socialContainer}>
           <a href="https://facebook.com" target="_blank" rel="noreferrer">
-  <img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook" style={{ width: 34, height: 34 }} />
-</a>
+            <img
+              src="https://img.icons8.com/color/48/facebook-new.png"
+              alt="Facebook"
+              style={socialIcon}
+            />
+          </a>
+
           <a href="https://instagram.com" target="_blank" rel="noreferrer">
-  <img src="https://img.icons8.com/color/48/instagram-new.png" alt="Instagram" style={{ width: 34, height: 34 }} />
-</a>
+            <img
+              src="https://img.icons8.com/color/48/instagram-new.png"
+              alt="Instagram"
+              style={socialIcon}
+            />
+          </a>
+
           <a href="https://tiktok.com" target="_blank" rel="noreferrer">
-  <img src="https://img.icons8.com/color/48/tiktok--v1.png" alt="TikTok" style={{ width: 34, height: 34 }} />
-</a>
+            <img
+              src="https://img.icons8.com/color/48/tiktok--v1.png"
+              alt="TikTok"
+              style={socialIcon}
+            />
+          </a>
         </div>
       </nav>
 
@@ -331,8 +349,6 @@ const linkStyle = {
 };
 
 const navStyle = {
-  flexWrap: "wrap",
-  gap: 15,
   position: "sticky",
   top: 0,
   zIndex: 1000,
@@ -341,7 +357,51 @@ const navStyle = {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  padding: "20px 35px",
+  flexWrap: "wrap",
+  gap: 20,
+  padding: "18px 25px",
+};
+
+const logoContainer = {
+  display: "flex",
+  alignItems: "center",
+};
+
+const logoStyle = {
+  margin: 0,
+  fontSize: "clamp(28px, 5vw, 38px)",
+  fontWeight: "bold",
+  color: "white",
+  letterSpacing: 1,
+};
+
+const menuWrapper = {
+  flex: 1,
+  display: "flex",
+  justifyContent: "center",
+};
+
+const menuStyle = {
+  display: "flex",
+  flexWrap: "wrap",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: 20,
+  rowGap: 12,
+};
+
+const socialContainer = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: 12,
+  flexWrap: "wrap",
+};
+
+const socialIcon = {
+  width: 34,
+  height: 34,
+  objectFit: "contain",
 };
 
 const menuStyle = {
