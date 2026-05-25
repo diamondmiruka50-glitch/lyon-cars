@@ -11,13 +11,12 @@ app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
 const db = mysql.createConnection({
-  host: "containers-us-west-xxx.railway.app",
+  host: "kodama.proxy.rlwy.net",
   user: "root",
-  password: "xxxxxxxx",
+  password: "FUMcoHPURWLEFbIdCRDeBokeHnnYBdhx",
   database: "railway",
-  port: 12345,
+  port: 45670,
 });
-
 db.connect((err) => {
   if (err) {
     console.log(err);
