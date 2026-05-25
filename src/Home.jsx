@@ -346,6 +346,9 @@ export default function App() {
 const linkStyle = {
   color: "white",
   textDecoration: "none",
+  fontSize: 15,
+  fontWeight: "600",
+  whiteSpace: "nowrap",
 };
 
 const navStyle = {
@@ -359,7 +362,7 @@ const navStyle = {
   alignItems: "center",
   flexWrap: "wrap",
   gap: 20,
-  padding: "18px 25px",
+  padding: "15px 20px",
 };
 
 const logoContainer = {
@@ -369,7 +372,7 @@ const logoContainer = {
 
 const logoStyle = {
   margin: 0,
-  fontSize: "clamp(28px, 5vw, 38px)",
+  fontSize: "clamp(24px, 5vw, 38px)",
   fontWeight: "bold",
   color: "white",
   letterSpacing: 1,
@@ -399,19 +402,12 @@ const socialContainer = {
 };
 
 const socialIcon = {
-  width: 34,
-  height: 34,
+  width: 30,
+  height: 30,
   objectFit: "contain",
 };
 
-const menuStyle = {
-  flexWrap: "wrap",
-  rowGap: 10,
-  display: "flex",
-  gap: 25,
-  flex: 1,
-  justifyContent: "center",
-};
+
 
 const heroStyle = {
   backgroundImage:
