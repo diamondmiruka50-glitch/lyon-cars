@@ -31,7 +31,7 @@ function CarSection({ title, carList }) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(3,1fr)",
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
           gap: 20,
         }}
       >
@@ -55,7 +55,8 @@ function CarSection({ title, carList }) {
               alt={car.name}
               style={{
                 width: "100%",
-                height: 180,
+                height: 220,
+                maxHeight: "50vw",
                 objectFit: "cover",
                 borderRadius: 10,
               }}
@@ -169,6 +170,8 @@ export default function App() {
         fontFamily: "Arial,sans-serif",
         background: "#fff",
         scrollBehavior: "smooth",
+        width: "100%",
+        overflowX: "hidden",
       }}
     >
       <nav style={navStyle}>
@@ -199,7 +202,7 @@ export default function App() {
       </nav>
 
       <section style={heroStyle}>
-        <h2 style={{ fontSize: 60, fontWeight: "bold" }}>
+        <h2 style={{ fontSize: "clamp(32px, 7vw, 60px)", fontWeight: "bold" }}>
           FIND YOUR <span style={{ color: "red" }}>DREAM</span> CAR TODAY.
         </h2>
 
@@ -328,6 +331,8 @@ const linkStyle = {
 };
 
 const navStyle = {
+  flexWrap: "wrap",
+  gap: 15,
   position: "sticky",
   top: 0,
   zIndex: 1000,
@@ -340,6 +345,8 @@ const navStyle = {
 };
 
 const menuStyle = {
+  flexWrap: "wrap",
+  rowGap: 10,
   display: "flex",
   gap: 25,
   flex: 1,
@@ -357,6 +364,7 @@ const heroStyle = {
 };
 
 const searchContainer = {
+  flexWrap: "wrap",
   background: "rgba(0,0,0,0.75)",
   padding: 25,
   borderRadius: 18,
@@ -367,6 +375,8 @@ const searchContainer = {
 };
 
 const inputStyle = {
+  width: "220px",
+  maxWidth: "100%",
   padding: "14px 18px",
   borderRadius: 8,
   fontSize: 16,
@@ -405,7 +415,7 @@ const whySection = {
 
 const whyGrid = {
   display: "grid",
-  gridTemplateColumns: "repeat(3,1fr)",
+  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
   gap: 25,
   maxWidth: 1200,
   margin: "auto",
@@ -419,7 +429,7 @@ const whyCard = {
 
 const contactGrid = {
   display: "grid",
-  gridTemplateColumns: "1fr 2fr",
+  gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))",
   gap: 40,
   maxWidth: 1100,
   margin: "auto",
