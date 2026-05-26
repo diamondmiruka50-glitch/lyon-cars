@@ -358,11 +358,12 @@ const navStyle = {
   background: "#000",
   color: "white",
   display: "flex",
-  justifyContent: "space-between",
+  flexDirection: "column",
+  justifyContent: "center",
   alignItems: "center",
-  flexWrap: "wrap",
-  gap: 20,
-  padding: "15px 20px",
+  gap: 18,
+  padding: "18px 15px",
+  textAlign: "center",
 };
 
 const logoContainer = {
@@ -379,7 +380,7 @@ const logoStyle = {
 };
 
 const menuWrapper = {
-  flex: 1,
+  width: "100%",
   display: "flex",
   justifyContent: "center",
 };
@@ -389,16 +390,18 @@ const menuStyle = {
   flexWrap: "wrap",
   justifyContent: "center",
   alignItems: "center",
-  gap: 20,
-  rowGap: 12,
+  gap: 14,
+  rowGap: 14,
+  width: "100%",
 };
 
 const socialContainer = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  gap: 12,
+  gap: 20,
   flexWrap: "wrap",
+  marginTop: 5,
 };
 
 const socialIcon = {
@@ -411,39 +414,49 @@ const socialIcon = {
 
 const heroStyle = {
   backgroundImage:
-    "url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1600')",
+    "linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1600')",
   backgroundSize: "cover",
   backgroundPosition: "center",
-  padding: "80px 30px",
+  padding: "60px 15px",
   color: "white",
   textAlign: "center",
 };
 
 const searchContainer = {
-  flexWrap: "wrap",
-  background: "rgba(0,0,0,0.75)",
-  padding: 25,
+  background: "rgba(0,0,0,0.78)",
+  padding: 20,
   borderRadius: 18,
   display: "flex",
-  gap: 15,
+  flexDirection: "column",
+  gap: 18,
   justifyContent: "center",
-  flexWrap: "wrap",
+  alignItems: "center",
+  width: "100%",
+  maxWidth: 420,
+  margin: "30px auto 0",
+  boxSizing: "border-box",
 };
 
 const inputStyle = {
-  width: "220px",
-  maxWidth: "100%",
-  padding: "14px 18px",
-  borderRadius: 8,
+  width: "100%",
+  padding: "16px 18px",
+  borderRadius: 12,
   fontSize: 16,
+  border: "none",
+  outline: "none",
+  boxSizing: "border-box",
 };
 
 const searchBtn = {
   background: "#e31b23",
   color: "white",
   border: "none",
-  padding: "14px 35px",
-  borderRadius: 8,
+  padding: "16px 35px",
+  borderRadius: 12,
+  width: "100%",
+  fontSize: 18,
+  fontWeight: "bold",
+  cursor: "pointer",
 };
 
 const viewBtn = {
