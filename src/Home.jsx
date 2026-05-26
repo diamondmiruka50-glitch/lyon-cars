@@ -417,7 +417,7 @@ const heroStyle = {
     "linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1600')",
   backgroundSize: "cover",
   backgroundPosition: "center",
-  padding: "60px 15px",
+  padding: "30px 15px 50px",
   color: "white",
   textAlign: "center",
 };
@@ -433,7 +433,7 @@ const searchContainer = {
   alignItems: "center",
   width: "100%",
   maxWidth: 420,
-  margin: "30px auto 0",
+  margin: "10px auto 0",
   boxSizing: "border-box",
 };
 
