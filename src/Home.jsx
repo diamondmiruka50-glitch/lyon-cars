@@ -115,8 +115,6 @@ function ButtonSection({ enquiry = false }) {
 export default function App() {
   const [cars, setCars] = useState([]);
 
-  const isMobile = window.innerWidth <= 768;
-
   const [selectedMake, setSelectedMake] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
   const [yearMin, setYearMin] = useState("");
@@ -344,6 +342,9 @@ export default function App() {
     </div>
   );
 }
+
+const isMobile =
+  typeof window !== "undefined" && window.innerWidth <= 768;
 
 const linkStyle = {
   color: "white",
