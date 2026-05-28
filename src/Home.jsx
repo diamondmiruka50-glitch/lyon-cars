@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-
-
-function CarSection({ title, carList }) {
+function CarSection({ title, carList, isMobile }) {
   const sectionBg = title === "AT THE PORT" ? "#eef5ff" : "#ffffff";
 
   return (
     <section
       style={{
-        padding: "20px 35px 35px",
-        marginTop: "-40px",
+        padding: isMobile ? "20px 15px 35px" : "30px 40px 50px",
         background: sectionBg,
       }}
     >
       <h2
         style={{
-          fontSize: 30,
+          fontSize: isMobile ? 28 : 38,
           fontWeight: "bold",
           textAlign: "center",
-          marginBottom: 20,
+          marginBottom: 30,
           background: "linear-gradient(90deg,#e31b23,#ff9800)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
@@ -31,8 +28,10 @@ function CarSection({ title, carList }) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: 20,
+          gridTemplateColumns: isMobile
+            ? "1fr"
+            : "repeat(auto-fit, minmax(300px, 1fr))",
+          gap: 25,
         }}
       >
         {carList.map((car, i) => (
@@ -41,47 +40,63 @@ function CarSection({ title, carList }) {
             key={i}
             style={{ textDecoration: "none", color: "inherit" }}
           >
-          <div
-            style={{
-              border: "1px solid #ddd",
-              borderRadius: 12,
-              padding: 15,
-              background: "white",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-            }}
-          >
-            <img
-              src={car.image}
-              alt={car.name}
+            <div
               style={{
-                width: "100%",
-                height: 220,
-                maxHeight: "50vw",
-                objectFit: "cover",
-                borderRadius: 10,
+                borderRadius: 18,
+                overflow: "hidden",
+                background: "#fff",
+                boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
+                transition: "0.3s",
               }}
-            />
+            >
+              <img
+                src={car.image}
+                alt={car.name}
+                style={{
+                  width: "100%",
+                  height: isMobile ? 240 : 260,
+                  objectFit: "cover",
+                }}
+              />
 
-            <h3>
-              {car.name} - {car.price}
-            </h3>
+              <div style={{ padding: 20 }}>
+                <h3
+                  style={{
+                    fontSize: 22,
+                    marginBottom: 10,
+                    color: "#111",
+                  }}
+                >
+                  {car.name}
+                </h3>
 
-            <p style={{ fontSize: 14, lineHeight: 1.7 }}>
-              Year: {car.year}
-              <br />
-              Engine: {car.engine}
-              <br />
-              Fuel Type: {car.fuel}
-              <br />
-              Transmission: {car.transmission}
-              <br />
-              Color: {car.color}
-              <br />
-              Mileage: {car.mileage}
-              <br />
-              Seating Capacity: {car.seats}
-            </p>
-          </div>
+                <h4
+                  style={{
+                    color: "#e31b23",
+                    fontSize: 22,
+                    marginBottom: 15,
+                  }}
+                >
+                  {car.price}
+                </h4>
+
+                <p style={{ lineHeight: 1.8, color: "#444" }}>
+                  Year: {car.year}
+                  <br />
+                  Engine: {car.engine}
+                  <br />
+                  Fuel Type: {car.fuel}
+                  <br />
+                  Transmission: {car.transmission}
+                  <br />
+                  Color: {car.color}
+                  <br />
+                  Mileage: {car.mileage}
+                  <br />
+                  Seating Capacity: {car.seats}
+                </p>
+              </div>
+            </div>
           </Link>
         ))}
       </div>
@@ -89,22 +104,51 @@ function CarSection({ title, carList }) {
   );
 }
 
-function ButtonSection({ enquiry = false }) {
+function ButtonSection({ enquiry = false, isMobile }) {
   return (
     <div
       style={{
         display: "flex",
         justifyContent: "center",
-        gap: 25,
-        paddingBottom: 35,
+        gap: 20,
+        flexWrap: "wrap",
+        padding: "10px 20px 40px",
       }}
     >
       <Link to="/inventory" style={{ textDecoration: "none" }}>
-        <button style={viewBtn}>VIEW ALL</button>
+        <button
+          style={{
+            background: "#000",
+            color: "#fff",
+            border: "none",
+            borderRadius: 10,
+            padding: isMobile ? "15px 28px" : "18px 40px",
+            fontSize: 16,
+            fontWeight: "bold",
+            cursor: "pointer",
+          }}
+        >
+          VIEW ALL
+        </button>
       </Link>
 
-      <a href="https://wa.me/254799117367?text=Hello%20LYON%20CARS%2C%20I%20am%20interested%20in%20your%20vehicles" target="_blank" rel="noreferrer">
-        <button style={bookBtn}>
+      <a
+        href="https://wa.me/254799117367?text=Hello%20LYON%20CARS%2C%20I%20am%20interested%20in%20your%20vehicles"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <button
+          style={{
+            background: "#25D366",
+            color: "#fff",
+            border: "none",
+            borderRadius: 10,
+            padding: isMobile ? "15px 28px" : "18px 40px",
+            fontSize: 16,
+            fontWeight: "bold",
+            cursor: "pointer",
+          }}
+        >
           {enquiry ? "MAKE ENQUIRY" : "BOOK TEST DRIVE"}
         </button>
       </a>
@@ -112,24 +156,60 @@ function ButtonSection({ enquiry = false }) {
   );
 }
 
-export default function App() {
+export default function Home() {
   const [cars, setCars] = useState([]);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const [selectedMake, setSelectedMake] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
   const [yearMin, setYearMin] = useState("");
   const [yearMax, setYearMax] = useState("");
 
-  const makes = [...new Set(cars.map((car) => car.name?.split(" ")[0]).filter(Boolean))];
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    fetch("https://lyon-cars-api.onrender.com/cars")
+      .then((res) => res.json())
+      .then((data) =>
+        setCars(
+          data.map((car) => ({
+            ...car,
+            image: `https://lyon-cars-api.onrender.com/uploads/${car.image}`,
+          }))
+        )
+      );
+  }, []);
+
+  const makes = [
+    ...new Set(
+      cars.map((car) => car.name?.split(" ")[0]).filter(Boolean)
+    ),
+  ];
 
   const years = Array.from({ length: 27 }, (_, i) => 2000 + i);
 
-  const models = [...new Set(
-    cars
-      .filter((car) => !selectedMake || car.name?.split(" ")[0] === selectedMake)
-      .map((car) => car.name?.split(" ").slice(1).join(" "))
-      .filter(Boolean)
-  )];
+  const models = [
+    ...new Set(
+      cars
+        .filter(
+          (car) =>
+            !selectedMake ||
+            car.name?.split(" ")[0] === selectedMake
+        )
+        .map((car) =>
+          car.name?.split(" ").slice(1).join(" ")
+        )
+        .filter(Boolean)
+    ),
+  ];
 
   const filteredCars = cars.filter((car) => {
     const make = car.name?.split(" ")[0];
@@ -151,390 +231,483 @@ export default function App() {
     (car) => car.location === "at_port"
   );
 
-  useEffect(() => {
-    fetch("https://lyon-cars-api.onrender.com/cars")
-      .then((res) => res.json())
-      .then((data) =>
-        setCars(
-          data.map((car) => ({
-            ...car,
-            image: `https://lyon-cars-api.onrender.com/uploads/${car.image}`,
-          }))
-        )
-      );
-  }, []);
-
   return (
     <div
       style={{
-        fontFamily: "Arial,sans-serif",
-        background: "#fff",
-        scrollBehavior: "smooth",
-        width: "100%",
+        fontFamily: "Arial, sans-serif",
         overflowX: "hidden",
       }}
     >
-      <nav style={navStyle}>
-        <div style={logoContainer}>
-          <a href="/inventory" style={{ textDecoration: "none" }}>
-            <h1 style={logoStyle}>
-              <span style={{ color: "#e31b23" }}>LYON</span> CARS
-            </h1>
+      {/* NAVBAR */}
+
+      <nav
+        style={{
+          background: "#000",
+          padding: isMobile ? "20px" : "18px 50px",
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: isMobile ? 20 : 0,
+        }}
+      >
+        <Link
+          to="/inventory"
+          style={{ textDecoration: "none" }}
+        >
+          <h1
+            style={{
+              fontSize: isMobile ? 44 : 48,
+              lineHeight: 1,
+              margin: 0,
+              textAlign: isMobile ? "center" : "left",
+            }}
+          >
+            <span style={{ color: "#e31b23" }}>LYON</span>{" "}
+            <span style={{ color: "#fff" }}>CARS</span>
+          </h1>
+        </Link>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: isMobile ? "column" : "row",
+            gap: isMobile ? 18 : 35,
+            alignItems: "center",
+          }}
+        >
+          <a href="#in-stock" style={navLink}>
+            In Stock
+          </a>
+
+          <a href="#at-port" style={navLink}>
+            At The Port & On Ship
+          </a>
+
+          <a href="#why-choose-us" style={navLink}>
+            Why Choose Us
+          </a>
+
+          <a href="#contact-us" style={navLink}>
+            Contact Us
           </a>
         </div>
 
-        <div style={menuWrapper}>
-          <div style={menuStyle}>
-            <a href="#in-stock" style={linkStyle}>In Stock</a>
-            <a href="#at-port" style={linkStyle}>At The Port & On Ship</a>
-            <a href="#why-choose-us" style={linkStyle}>Why Choose Us</a>
-            <a href="#contact-us" style={linkStyle}>Contact Us</a>
-          </div>
-        </div>
+        <div
+          style={{
+            display: "flex",
+            gap: 15,
+            alignItems: "center",
+          }}
+        >
+          <img
+            src="https://img.icons8.com/color/48/facebook-new.png"
+            alt="facebook"
+            style={socialIcon}
+          />
 
-        <div style={socialContainer}>
-          <a href="https://facebook.com" target="_blank" rel="noreferrer">
-            <img
-              src="https://img.icons8.com/color/48/facebook-new.png"
-              alt="Facebook"
-              style={socialIcon}
-            />
-          </a>
+          <img
+            src="https://img.icons8.com/color/48/instagram-new.png"
+            alt="instagram"
+            style={socialIcon}
+          />
 
-          <a href="https://instagram.com" target="_blank" rel="noreferrer">
-            <img
-              src="https://img.icons8.com/color/48/instagram-new.png"
-              alt="Instagram"
-              style={socialIcon}
-            />
-          </a>
-
-          <a href="https://tiktok.com" target="_blank" rel="noreferrer">
-            <img
-              src="https://img.icons8.com/color/48/tiktok--v1.png"
-              alt="TikTok"
-              style={socialIcon}
-            />
-          </a>
+          <img
+            src="https://img.icons8.com/color/48/tiktok--v1.png"
+            alt="tiktok"
+            style={socialIcon}
+          />
         </div>
       </nav>
 
-      <section style={heroStyle}>
-        <h2 style={{ fontSize: "clamp(32px, 7vw, 60px)", fontWeight: "bold" }}>
-          FIND YOUR <span style={{ color: "red" }}>DREAM</span> CAR TODAY.
+      {/* HERO SECTION */}
+
+      <section
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1600')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          padding: isMobile
+            ? "70px 20px 80px"
+            : "110px 50px 140px",
+          textAlign: "center",
+          color: "white",
+        }}
+      >
+        <h2
+          style={{
+            fontSize: isMobile
+              ? "54px"
+              : "clamp(48px,5vw,78px)",
+            fontWeight: "bold",
+            lineHeight: 1.1,
+            whiteSpace: isMobile ? "normal" : "nowrap",
+            marginBottom: 50,
+          }}
+        >
+          FIND YOUR{" "}
+          <span style={{ color: "red" }}>DREAM</span>{" "}
+          CAR TODAY.
         </h2>
 
-        <div style={searchContainer}>
+        <div
+          style={{
+            background: "rgba(0,0,0,0.7)",
+            padding: isMobile ? 20 : 30,
+            borderRadius: 18,
+            display: "flex",
+            flexDirection: isMobile ? "column" : "row",
+            gap: 18,
+            justifyContent: "center",
+            alignItems: "center",
+            maxWidth: 1300,
+            margin: "0 auto",
+          }}
+        >
           <select
             style={inputStyle}
             value={selectedMake}
-            onChange={(e) => setSelectedMake(e.target.value)}
+            onChange={(e) =>
+              setSelectedMake(e.target.value)
+            }
           >
             <option value="">All Makes</option>
+
             {makes.map((make, index) => (
               <option key={index}>{make}</option>
             ))}
           </select>
+
           <select
             style={inputStyle}
             value={selectedModel}
-            onChange={(e) => setSelectedModel(e.target.value)}
+            onChange={(e) =>
+              setSelectedModel(e.target.value)
+            }
           >
             <option value="">All Models</option>
+
             {models.map((model, index) => (
               <option key={index}>{model}</option>
             ))}
           </select>
+
           <select
             style={inputStyle}
             value={yearMin}
-            onChange={(e) => setYearMin(e.target.value)}
+            onChange={(e) =>
+              setYearMin(e.target.value)
+            }
           >
             <option value="">Year Min</option>
+
             {years.map((year) => (
               <option key={year}>{year}</option>
             ))}
           </select>
+
           <select
             style={inputStyle}
             value={yearMax}
-            onChange={(e) => setYearMax(e.target.value)}
+            onChange={(e) =>
+              setYearMax(e.target.value)
+            }
           >
             <option value="">Year Max</option>
+
             {years.map((year) => (
               <option key={year}>{year}</option>
             ))}
           </select>
+
           <button style={searchBtn}>SEARCH</button>
         </div>
       </section>
 
       <div id="in-stock">
-        <CarSection title="IN STOCK" carList={inStockCars.slice(0, 6)} />
+        <CarSection
+          title="IN STOCK"
+          carList={inStockCars.slice(0, 6)}
+          isMobile={isMobile}
+        />
       </div>
-      <ButtonSection />
+
+      <ButtonSection isMobile={isMobile} />
 
       <div id="at-port">
-        <CarSection title="AT THE PORT" carList={atPortCars.slice(0, 6)} />
+        <CarSection
+          title="AT THE PORT"
+          carList={atPortCars.slice(0, 6)}
+          isMobile={isMobile}
+        />
       </div>
-      <ButtonSection enquiry={true} />
 
-      <section id="why-choose-us" style={whySection}>
-        <h2 style={{ fontSize: 32 }}>WHY CHOOSE US</h2>
+      <ButtonSection enquiry={true} isMobile={isMobile} />
 
-        <div style={whyGrid}>
+      {/* WHY US */}
+
+      <section
+        id="why-choose-us"
+        style={{
+          background: "#0f172a",
+          color: "#fff",
+          padding: isMobile
+            ? "60px 20px"
+            : "80px 50px",
+          textAlign: "center",
+        }}
+      >
+        <h2
+          style={{
+            fontSize: isMobile ? 34 : 42,
+            marginBottom: 40,
+          }}
+        >
+          WHY CHOOSE US
+        </h2>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: isMobile
+              ? "1fr"
+              : "repeat(3,1fr)",
+            gap: 25,
+            maxWidth: 1200,
+            margin: "0 auto",
+          }}
+        >
           <div style={whyCard}>
             <h3>Customer Satisfaction</h3>
-            <p>Quality vehicles and excellent customer support.</p>
+            <p>
+              Quality vehicles and excellent customer
+              support.
+            </p>
           </div>
 
           <div style={whyCard}>
             <h3>Reliability</h3>
-            <p>All vehicles are professionally inspected.</p>
+            <p>
+              All vehicles are professionally inspected.
+            </p>
           </div>
 
           <div style={whyCard}>
             <h3>Variety of Brands</h3>
-            <p>Choose from top international vehicle brands.</p>
+            <p>
+              Choose from top international vehicle
+              brands.
+            </p>
           </div>
         </div>
       </section>
 
-      <section id="contact-us" style={{ padding: "70px 35px", background: "#fff" }}>
-        <h2 style={{ textAlign: "center", fontSize: 32, color: "#e31b23" }}>
+      {/* CONTACT */}
+
+      <section
+        id="contact-us"
+        style={{
+          padding: isMobile
+            ? "60px 20px"
+            : "80px 50px",
+        }}
+      >
+        <h2
+          style={{
+            textAlign: "center",
+            color: "#e31b23",
+            fontSize: isMobile ? 34 : 42,
+            marginBottom: 40,
+          }}
+        >
           CONTACT US
         </h2>
 
-        <div style={contactGrid}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-            <a href="mailto:lyonmotors@gmail.com"><button style={contactBtn}>📧 E-MAIL</button></a>
-            <a href="tel:+254799117367"><button style={contactBtn}>📞 CALL US</button></a>
-            <a href="https://wa.me/254799117367?text=Hello%20LYON%20CARS%2C%20I%20am%20interested%20in%20your%20vehicles"><button style={contactBtn}>💬 WHATSAPP</button></a>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: isMobile
+              ? "1fr"
+              : "1fr 1fr",
+            gap: 40,
+            maxWidth: 1200,
+            margin: "0 auto",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 18,
+            }}
+          >
+            <button style={contactBtn}>
+              📧 E-MAIL
+            </button>
+
+            <button style={contactBtn}>
+              📞 CALL US
+            </button>
+
+            <button style={contactBtn}>
+              💬 WHATSAPP
+            </button>
           </div>
 
-          <form style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-            <input type="text" placeholder="Enter your name" style={formInput} />
-            <input type="email" placeholder="Enter your email" style={formInput} />
-            <input type="tel" placeholder="Enter your phone number" style={formInput} />
-            <input type="text" placeholder="Subject" style={formInput} />
-            <textarea rows="6" placeholder="Write your message here..." style={formInput}></textarea>
-            <button type="submit" style={submitBtn}>SUBMIT</button>
+          <form
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 18,
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Enter your name"
+              style={formInput}
+            />
+
+            <input
+              type="email"
+              placeholder="Enter your email"
+              style={formInput}
+            />
+
+            <input
+              type="tel"
+              placeholder="Enter your phone number"
+              style={formInput}
+            />
+
+            <textarea
+              rows="6"
+              placeholder="Write your message..."
+              style={formInput}
+            ></textarea>
+
+            <button style={submitBtn}>
+              SUBMIT
+            </button>
           </form>
         </div>
       </section>
 
-      <footer style={footerStyle}>
-        <h3 style={{ color: "#e31b23", fontSize: 26 }}>Visit Our Showroom</h3>
+      {/* FOOTER */}
+
+      <footer
+        style={{
+          background: "#000",
+          color: "#fff",
+          textAlign: "center",
+          padding: "50px 20px",
+        }}
+      >
+        <h2 style={{ color: "#e31b23" }}>
+          LYON MOTORS
+        </h2>
+
         <p>Along Kiambu Road</p>
+
         <p>
-          <strong>Opening Hours:</strong><br />
-          Mon-Sat 8.00am-6.00pm<br />
+          Mon-Sat 8.00am-6.00pm
+          <br />
           Sun & Public Holidays 11.30am-5.00pm
         </p>
-        <h2>LYON MOTORS</h2>
-        <div style={{ display: "flex", justifyContent: "center", gap: 25, fontSize: 30 }}>
-          <img src="https://img.icons8.com/color/48/instagram-new.png" alt="Instagram" style={{ width: 34, height: 34 }} />
-          <img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook" style={{ width: 34, height: 34 }} />
-          <img src="https://img.icons8.com/color/48/tiktok--v1.png" alt="TikTok" style={{ width: 34, height: 34 }} />
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: 15,
+            margin: "20px 0",
+          }}
+        >
+          <img
+            src="https://img.icons8.com/color/48/facebook-new.png"
+            alt="facebook"
+            style={socialIcon}
+          />
+
+          <img
+            src="https://img.icons8.com/color/48/instagram-new.png"
+            alt="instagram"
+            style={socialIcon}
+          />
+
+          <img
+            src="https://img.icons8.com/color/48/tiktok--v1.png"
+            alt="tiktok"
+            style={socialIcon}
+          />
         </div>
+
         <p>📧 lyonmotors@gmail.com</p>
       </footer>
     </div>
   );
 }
 
-const isMobile =
-  typeof window !== "undefined" && window.innerWidth <= 768;
-
-const linkStyle = {
+const navLink = {
   color: "white",
   textDecoration: "none",
-  fontSize: 15,
-  fontWeight: "600",
-  whiteSpace: "nowrap",
-};
-
-const navStyle = {
-  position: "sticky",
-  top: 0,
-  zIndex: 1000,
-  background: "#000",
-  color: "white",
-  display: "flex",
-  flexDirection: isMobile ? "column" : "row",
-  justifyContent: "space-between",
-  alignItems: "center",
-  gap: isMobile ? 18 : 20,
-  padding: isMobile ? "18px 15px" : "18px 35px",
-  textAlign: "center",
-};
-
-const logoContainer = {
-  display: "flex",
-  alignItems: "center",
-};
-
-const logoStyle = {
-  margin: 0,
-  fontSize: "clamp(24px, 5vw, 38px)",
   fontWeight: "bold",
-  color: "white",
-  letterSpacing: 1,
-};
-
-const menuWrapper = {
-  width: "100%",
-  display: "flex",
-  justifyContent: "center",
-};
-
-const menuStyle = {
-  display: "flex",
-  flexWrap: "wrap",
-  justifyContent: "center",
-  alignItems: "center",
-  gap: 14,
-  rowGap: 14,
-  width: "100%",
-};
-
-const socialContainer = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: 20,
-  flexWrap: "wrap",
-  marginTop: 5,
+  fontSize: 18,
 };
 
 const socialIcon = {
-  width: 30,
-  height: 30,
-  objectFit: "contain",
-};
-
-
-
-const heroStyle = {
-  backgroundImage:
-    "linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1600')",
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  padding: isMobile ? "30px 15px 50px" : "80px 30px",
-  color: "white",
-  textAlign: "center",
-};
-
-const searchContainer = {
-  background: "rgba(0,0,0,0.78)",
-  padding: 20,
-  borderRadius: 18,
-  display: "flex",
-  flexDirection: isMobile ? "column" : "row",
-  gap: 18,
-  justifyContent: "center",
-  alignItems: "center",
-  width: "100%",
-  maxWidth: isMobile ? 420 : 1200,
-  margin: isMobile ? "10px auto 0" : "30px auto 0",
-  boxSizing: "border-box",
-  flexWrap: "wrap",
+  width: 38,
+  height: 38,
+  cursor: "pointer",
 };
 
 const inputStyle = {
-  width: "100%",
-  padding: "16px 18px",
+  padding: "18px",
   borderRadius: 12,
-  fontSize: 16,
   border: "none",
-  outline: "none",
-  boxSizing: "border-box",
+  width: "100%",
+  maxWidth: 260,
+  fontSize: 18,
 };
 
 const searchBtn = {
   background: "#e31b23",
-  color: "white",
+  color: "#fff",
   border: "none",
-  padding: "16px 35px",
   borderRadius: 12,
-  width: "100%",
-  fontSize: 18,
+  padding: "18px 35px",
   fontWeight: "bold",
   cursor: "pointer",
-};
-
-const viewBtn = {
-  background: "black",
-  color: "white",
-  padding: "18px 40px",
-  borderRadius: 10,
-  border: "none",
-};
-
-const bookBtn = {
-  background: "#2db742",
-  color: "white",
-  padding: "18px 40px",
-  borderRadius: 10,
-  border: "none",
-};
-
-const whySection = {
-  padding: "60px 35px",
-  background: "#0f172a",
-  color: "white",
-  textAlign: "center",
-};
-
-const whyGrid = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-  gap: 25,
-  maxWidth: 1200,
-  margin: "auto",
+  fontSize: 17,
 };
 
 const whyCard = {
   background: "#1e293b",
-  padding: 25,
-  borderRadius: 12,
-};
-
-const contactGrid = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))",
-  gap: 40,
-  maxWidth: 1100,
-  margin: "auto",
+  padding: 30,
+  borderRadius: 18,
 };
 
 const formInput = {
-  padding: "16px",
-  borderRadius: 8,
+  padding: 18,
+  borderRadius: 10,
   border: "1px solid #ccc",
 };
 
 const submitBtn = {
   background: "#e31b23",
-  color: "white",
+  color: "#fff",
   border: "none",
-  padding: "16px",
-  borderRadius: 8,
+  borderRadius: 10,
+  padding: 18,
+  fontWeight: "bold",
 };
 
 const contactBtn = {
   background: "#0f172a",
-  color: "white",
+  color: "#fff",
   border: "none",
-  padding: "18px",
-  borderRadius: 8,
+  borderRadius: 10,
+  padding: 18,
   fontWeight: "bold",
-};
-
-const footerStyle = {
-  background: "#000",
-  color: "white",
-  textAlign: "center",
-  padding: "50px 20px",
-  marginTop: 40,
+  cursor: "pointer",
 };
