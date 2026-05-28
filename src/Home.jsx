@@ -115,6 +115,8 @@ function ButtonSection({ enquiry = false }) {
 export default function App() {
   const [cars, setCars] = useState([]);
 
+  const isMobile = window.innerWidth <= 768;
+
   const [selectedMake, setSelectedMake] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
   const [yearMin, setYearMin] = useState("");
@@ -358,11 +360,11 @@ const navStyle = {
   background: "#000",
   color: "white",
   display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
+  flexDirection: isMobile ? "column" : "row",
+  justifyContent: "space-between",
   alignItems: "center",
-  gap: 18,
-  padding: "18px 15px",
+  gap: isMobile ? 18 : 20,
+  padding: isMobile ? "18px 15px" : "18px 35px",
   textAlign: "center",
 };
 
@@ -417,7 +419,7 @@ const heroStyle = {
     "linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1600')",
   backgroundSize: "cover",
   backgroundPosition: "center",
-  padding: "30px 15px 50px",
+  padding: isMobile ? "30px 15px 50px" : "80px 30px",
   color: "white",
   textAlign: "center",
 };
@@ -427,14 +429,15 @@ const searchContainer = {
   padding: 20,
   borderRadius: 18,
   display: "flex",
-  flexDirection: "column",
+  flexDirection: isMobile ? "column" : "row",
   gap: 18,
   justifyContent: "center",
   alignItems: "center",
   width: "100%",
-  maxWidth: 420,
-  margin: "10px auto 0",
+  maxWidth: isMobile ? 420 : 1200,
+  margin: isMobile ? "10px auto 0" : "30px auto 0",
   boxSizing: "border-box",
+  flexWrap: "wrap",
 };
 
 const inputStyle = {
