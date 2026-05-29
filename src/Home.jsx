@@ -2,22 +2,26 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function CarSection({ title, carList, isMobile }) {
-  const sectionBg = title === "AT THE PORT" ? "#eef5ff" : "#ffffff";
+  const sectionBg =
+    title === "AT THE PORT" ? "#eef5ff" : "#ffffff";
 
   return (
     <section
       style={{
-        padding: isMobile ? "20px 15px 35px" : "30px 40px 50px",
+        padding: isMobile
+          ? "20px 15px 40px"
+          : "35px 45px 55px",
         background: sectionBg,
       }}
     >
       <h2
         style={{
-          fontSize: isMobile ? 28 : 38,
+          fontSize: isMobile ? 24 : 34,
           fontWeight: "bold",
           textAlign: "center",
-          marginBottom: 30,
-          background: "linear-gradient(90deg,#e31b23,#ff9800)",
+          marginBottom: 25,
+          background:
+            "linear-gradient(90deg,#e31b23,#ff9800)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
         }}
@@ -30,7 +34,7 @@ function CarSection({ title, carList, isMobile }) {
           display: "grid",
           gridTemplateColumns: isMobile
             ? "1fr"
-            : "repeat(auto-fit, minmax(300px, 1fr))",
+            : "repeat(auto-fit,minmax(300px,1fr))",
           gap: 25,
         }}
       >
@@ -38,14 +42,18 @@ function CarSection({ title, carList, isMobile }) {
           <Link
             to={`/car/${car.id || i + 1}`}
             key={i}
-            style={{ textDecoration: "none", color: "inherit" }}
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+            }}
           >
             <div
               style={{
-                borderRadius: 18,
+                borderRadius: 16,
                 overflow: "hidden",
                 background: "#fff",
-                boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
+                boxShadow:
+                  "0 4px 15px rgba(0,0,0,0.1)",
                 transition: "0.3s",
               }}
             >
@@ -54,7 +62,7 @@ function CarSection({ title, carList, isMobile }) {
                 alt={car.name}
                 style={{
                   width: "100%",
-                  height: isMobile ? 240 : 260,
+                  height: isMobile ? 220 : 250,
                   objectFit: "cover",
                 }}
               />
@@ -62,7 +70,7 @@ function CarSection({ title, carList, isMobile }) {
               <div style={{ padding: 20 }}>
                 <h3
                   style={{
-                    fontSize: 22,
+                    fontSize: isMobile ? 18 : 22,
                     marginBottom: 10,
                     color: "#111",
                   }}
@@ -73,14 +81,20 @@ function CarSection({ title, carList, isMobile }) {
                 <h4
                   style={{
                     color: "#e31b23",
-                    fontSize: 22,
+                    fontSize: isMobile ? 20 : 24,
                     marginBottom: 15,
                   }}
                 >
                   {car.price}
                 </h4>
 
-                <p style={{ lineHeight: 1.8, color: "#444" }}>
+                <p
+                  style={{
+                    lineHeight: 1.7,
+                    color: "#444",
+                    fontSize: isMobile ? 14 : 15,
+                  }}
+                >
                   Year: {car.year}
                   <br />
                   Engine: {car.engine}
@@ -110,20 +124,25 @@ function ButtonSection({ enquiry = false, isMobile }) {
       style={{
         display: "flex",
         justifyContent: "center",
-        gap: 20,
+        gap: 18,
         flexWrap: "wrap",
-        padding: "10px 20px 40px",
+        padding: "5px 20px 45px",
       }}
     >
-      <Link to="/inventory" style={{ textDecoration: "none" }}>
+      <Link
+        to="/inventory"
+        style={{ textDecoration: "none" }}
+      >
         <button
           style={{
             background: "#000",
             color: "#fff",
             border: "none",
             borderRadius: 10,
-            padding: isMobile ? "15px 28px" : "18px 40px",
-            fontSize: 16,
+            padding: isMobile
+              ? "14px 24px"
+              : "16px 34px",
+            fontSize: 15,
             fontWeight: "bold",
             cursor: "pointer",
           }}
@@ -143,13 +162,17 @@ function ButtonSection({ enquiry = false, isMobile }) {
             color: "#fff",
             border: "none",
             borderRadius: 10,
-            padding: isMobile ? "15px 28px" : "18px 40px",
-            fontSize: 16,
+            padding: isMobile
+              ? "14px 24px"
+              : "16px 34px",
+            fontSize: 15,
             fontWeight: "bold",
             cursor: "pointer",
           }}
         >
-          {enquiry ? "MAKE ENQUIRY" : "BOOK TEST DRIVE"}
+          {enquiry
+            ? "MAKE ENQUIRY"
+            : "BOOK TEST DRIVE"}
         </button>
       </a>
     </div>
@@ -158,11 +181,18 @@ function ButtonSection({ enquiry = false, isMobile }) {
 
 export default function Home() {
   const [cars, setCars] = useState([]);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(
+    window.innerWidth <= 768
+  );
 
-  const [selectedMake, setSelectedMake] = useState("");
-  const [selectedModel, setSelectedModel] = useState("");
+  const [selectedMake, setSelectedMake] =
+    useState("");
+
+  const [selectedModel, setSelectedModel] =
+    useState("");
+
   const [yearMin, setYearMin] = useState("");
+
   const [yearMax, setYearMax] = useState("");
 
   useEffect(() => {
@@ -170,9 +200,16 @@ export default function Home() {
       setIsMobile(window.innerWidth <= 768);
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener(
+      "resize",
+      handleResize
+    );
 
-    return () => window.removeEventListener("resize", handleResize);
+    return () =>
+      window.removeEventListener(
+        "resize",
+        handleResize
+      );
   }, []);
 
   useEffect(() => {
@@ -190,11 +227,16 @@ export default function Home() {
 
   const makes = [
     ...new Set(
-      cars.map((car) => car.name?.split(" ")[0]).filter(Boolean)
+      cars
+        .map((car) => car.name?.split(" ")[0])
+        .filter(Boolean)
     ),
   ];
 
-  const years = Array.from({ length: 27 }, (_, i) => 2000 + i);
+  const years = Array.from(
+    { length: 27 },
+    (_, i) => 2000 + i
+  );
 
   const models = [
     ...new Set(
@@ -202,10 +244,14 @@ export default function Home() {
         .filter(
           (car) =>
             !selectedMake ||
-            car.name?.split(" ")[0] === selectedMake
+            car.name?.split(" ")[0] ===
+              selectedMake
         )
         .map((car) =>
-          car.name?.split(" ").slice(1).join(" ")
+          car.name
+            ?.split(" ")
+            .slice(1)
+            .join(" ")
         )
         .filter(Boolean)
     ),
@@ -213,18 +259,27 @@ export default function Home() {
 
   const filteredCars = cars.filter((car) => {
     const make = car.name?.split(" ")[0];
-    const model = car.name?.split(" ").slice(1).join(" ");
+
+    const model = car.name
+      ?.split(" ")
+      .slice(1)
+      .join(" ");
 
     return (
       (!selectedMake || make === selectedMake) &&
-      (!selectedModel || model === selectedModel) &&
-      (!yearMin || Number(car.year) >= Number(yearMin)) &&
-      (!yearMax || Number(car.year) <= Number(yearMax))
+      (!selectedModel ||
+        model === selectedModel) &&
+      (!yearMin ||
+        Number(car.year) >= Number(yearMin)) &&
+      (!yearMax ||
+        Number(car.year) <= Number(yearMax))
     );
   });
 
   const inStockCars = filteredCars.filter(
-    (car) => !car.location || car.location === "in_stock"
+    (car) =>
+      !car.location ||
+      car.location === "in_stock"
   );
 
   const atPortCars = filteredCars.filter(
@@ -236,6 +291,7 @@ export default function Home() {
       style={{
         fontFamily: "Arial, sans-serif",
         overflowX: "hidden",
+        background: "#fff",
       }}
     >
       {/* NAVBAR */}
@@ -243,12 +299,16 @@ export default function Home() {
       <nav
         style={{
           background: "#000",
-          padding: isMobile ? "20px" : "18px 50px",
+          padding: isMobile
+            ? "18px 18px"
+            : "18px 45px",
           display: "flex",
-          flexDirection: isMobile ? "column" : "row",
+          flexDirection: isMobile
+            ? "column"
+            : "row",
           alignItems: "center",
           justifyContent: "space-between",
-          gap: isMobile ? 20 : 0,
+          gap: isMobile ? 18 : 20,
         }}
       >
         <Link
@@ -257,23 +317,29 @@ export default function Home() {
         >
           <h1
             style={{
-              fontSize: isMobile ? 44 : 48,
-              lineHeight: 1,
+              fontSize: isMobile ? 32 : 42,
               margin: 0,
-              textAlign: isMobile ? "center" : "left",
+              lineHeight: 1,
+              textAlign: "center",
             }}
           >
-            <span style={{ color: "#e31b23" }}>LYON</span>{" "}
-            <span style={{ color: "#fff" }}>CARS</span>
+            <span style={{ color: "#e31b23" }}>
+              LYON
+            </span>{" "}
+            <span style={{ color: "#fff" }}>
+              CARS
+            </span>
           </h1>
         </Link>
 
         <div
           style={{
             display: "flex",
-            flexDirection: isMobile ? "column" : "row",
-            gap: isMobile ? 18 : 35,
+            flexDirection: isMobile
+              ? "column"
+              : "row",
             alignItems: "center",
+            gap: isMobile ? 15 : 28,
           }}
         >
           <a href="#in-stock" style={navLink}>
@@ -284,7 +350,10 @@ export default function Home() {
             At The Port & On Ship
           </a>
 
-          <a href="#why-choose-us" style={navLink}>
+          <a
+            href="#why-choose-us"
+            style={navLink}
+          >
             Why Choose Us
           </a>
 
@@ -296,7 +365,7 @@ export default function Home() {
         <div
           style={{
             display: "flex",
-            gap: 15,
+            gap: 12,
             alignItems: "center",
           }}
         >
@@ -320,48 +389,72 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* HERO SECTION */}
+      {/* HERO */}
 
       <section
         style={{
           backgroundImage:
             "linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1600')",
+
           backgroundSize: "cover",
+
           backgroundPosition: "center",
+
           padding: isMobile
-            ? "70px 20px 80px"
-            : "110px 50px 140px",
+            ? "60px 18px 80px"
+            : "95px 45px 120px",
+
           textAlign: "center",
-          color: "white",
+
+          color: "#fff",
         }}
       >
         <h2
           style={{
             fontSize: isMobile
-              ? "54px"
-              : "clamp(48px,5vw,78px)",
+              ? "32px"
+              : "clamp(34px,3vw,52px)",
+
             fontWeight: "bold",
-            lineHeight: 1.1,
-            whiteSpace: isMobile ? "normal" : "nowrap",
-            marginBottom: 50,
+
+            lineHeight: 1.2,
+
+            whiteSpace: isMobile
+              ? "normal"
+              : "nowrap",
+
+            marginBottom: 35,
           }}
         >
           FIND YOUR{" "}
-          <span style={{ color: "red" }}>DREAM</span>{" "}
+          <span style={{ color: "red" }}>
+            DREAM
+          </span>{" "}
           CAR TODAY.
         </h2>
 
         <div
           style={{
-            background: "rgba(0,0,0,0.7)",
-            padding: isMobile ? 20 : 30,
+            background: "rgba(0,0,0,0.72)",
+
+            padding: isMobile ? 20 : 25,
+
             borderRadius: 18,
+
             display: "flex",
-            flexDirection: isMobile ? "column" : "row",
-            gap: 18,
+
+            flexDirection: isMobile
+              ? "column"
+              : "row",
+
+            gap: 15,
+
             justifyContent: "center",
+
             alignItems: "center",
-            maxWidth: 1300,
+
+            maxWidth: 1200,
+
             margin: "0 auto",
           }}
         >
@@ -421,7 +514,9 @@ export default function Home() {
             ))}
           </select>
 
-          <button style={searchBtn}>SEARCH</button>
+          <button style={searchBtn}>
+            SEARCH
+          </button>
         </div>
       </section>
 
@@ -443,7 +538,10 @@ export default function Home() {
         />
       </div>
 
-      <ButtonSection enquiry={true} isMobile={isMobile} />
+      <ButtonSection
+        enquiry={true}
+        isMobile={isMobile}
+      />
 
       {/* WHY US */}
 
@@ -453,15 +551,15 @@ export default function Home() {
           background: "#0f172a",
           color: "#fff",
           padding: isMobile
-            ? "60px 20px"
-            : "80px 50px",
+            ? "60px 18px"
+            : "75px 45px",
           textAlign: "center",
         }}
       >
         <h2
           style={{
-            fontSize: isMobile ? 34 : 42,
-            marginBottom: 40,
+            fontSize: isMobile ? 28 : 38,
+            marginBottom: 35,
           }}
         >
           WHY CHOOSE US
@@ -480,24 +578,28 @@ export default function Home() {
         >
           <div style={whyCard}>
             <h3>Customer Satisfaction</h3>
+
             <p>
-              Quality vehicles and excellent customer
-              support.
+              Quality vehicles and excellent
+              customer support.
             </p>
           </div>
 
           <div style={whyCard}>
             <h3>Reliability</h3>
+
             <p>
-              All vehicles are professionally inspected.
+              All vehicles are professionally
+              inspected.
             </p>
           </div>
 
           <div style={whyCard}>
             <h3>Variety of Brands</h3>
+
             <p>
-              Choose from top international vehicle
-              brands.
+              Choose from top international
+              vehicle brands.
             </p>
           </div>
         </div>
@@ -509,15 +611,15 @@ export default function Home() {
         id="contact-us"
         style={{
           padding: isMobile
-            ? "60px 20px"
-            : "80px 50px",
+            ? "60px 18px"
+            : "75px 45px",
         }}
       >
         <h2
           style={{
             textAlign: "center",
             color: "#e31b23",
-            fontSize: isMobile ? 34 : 42,
+            fontSize: isMobile ? 30 : 40,
             marginBottom: 40,
           }}
         >
@@ -531,7 +633,7 @@ export default function Home() {
               ? "1fr"
               : "1fr 1fr",
             gap: 40,
-            maxWidth: 1200,
+            maxWidth: 1150,
             margin: "0 auto",
           }}
         >
@@ -600,7 +702,7 @@ export default function Home() {
           background: "#000",
           color: "#fff",
           textAlign: "center",
-          padding: "50px 20px",
+          padding: "45px 18px",
         }}
       >
         <h2 style={{ color: "#e31b23" }}>
@@ -619,7 +721,7 @@ export default function Home() {
           style={{
             display: "flex",
             justifyContent: "center",
-            gap: 15,
+            gap: 12,
             margin: "20px 0",
           }}
         >
@@ -652,43 +754,43 @@ const navLink = {
   color: "white",
   textDecoration: "none",
   fontWeight: "bold",
-  fontSize: 18,
+  fontSize: 15,
 };
 
 const socialIcon = {
-  width: 38,
-  height: 38,
+  width: 34,
+  height: 34,
   cursor: "pointer",
 };
 
 const inputStyle = {
-  padding: "18px",
-  borderRadius: 12,
+  padding: "15px",
+  borderRadius: 10,
   border: "none",
   width: "100%",
-  maxWidth: 260,
-  fontSize: 18,
+  maxWidth: 220,
+  fontSize: 15,
 };
 
 const searchBtn = {
   background: "#e31b23",
   color: "#fff",
   border: "none",
-  borderRadius: 12,
-  padding: "18px 35px",
+  borderRadius: 10,
+  padding: "15px 30px",
   fontWeight: "bold",
   cursor: "pointer",
-  fontSize: 17,
+  fontSize: 15,
 };
 
 const whyCard = {
   background: "#1e293b",
-  padding: 30,
-  borderRadius: 18,
+  padding: 28,
+  borderRadius: 16,
 };
 
 const formInput = {
-  padding: 18,
+  padding: 16,
   borderRadius: 10,
   border: "1px solid #ccc",
 };
@@ -698,7 +800,7 @@ const submitBtn = {
   color: "#fff",
   border: "none",
   borderRadius: 10,
-  padding: 18,
+  padding: 16,
   fontWeight: "bold",
 };
 
@@ -707,7 +809,7 @@ const contactBtn = {
   color: "#fff",
   border: "none",
   borderRadius: 10,
-  padding: 18,
+  padding: 16,
   fontWeight: "bold",
   cursor: "pointer",
 };
