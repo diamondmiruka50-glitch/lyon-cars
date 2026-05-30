@@ -1,105 +1,140 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-function CarSection({ title, cars, isAdmin, deleteCar }) {
+export default function Inventory() {
+  const [cars, setCars] = useState([]);
+
+  useEffect(() => {
+    fetch("https://lyon-cars-api.onrender.com/cars")
+      .then((res) => res.json())
+      .then((data) =>
+        setCars(
+          data.map((car) => ({
+            ...car,
+            image: `https://lyon-cars-api.onrender.com/uploads/${car.image}`,
+          }))
+        )
+      );
+  }, []);
+
+  const deleteCar = async (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this vehicle?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await fetch(
+        `https://lyon-cars-api.onrender.com/cars/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      setCars(cars.filter((car) => car.id !== id));
+
+      alert("Vehicle deleted successfully");
+    } catch (error) {
+      console.error(error);
+      alert("Failed to delete vehicle");
+    }
+  };
+
   return (
-    <div style={{ marginBottom: 50 }}>
-      <h2
+    <div
+      style={{
+        padding: "40px 20px",
+        background: "#f5f5f5",
+        minHeight: "100vh",
+      }}
+    >
+      <h1
         style={{
           textAlign: "center",
-          fontSize: 30,
-          marginBottom: 25,
-          color: "#e31b23",
+          marginBottom: 40,
+          fontSize: 40,
         }}
       >
-        {title}
-      </h2>
+        INVENTORY
+      </h1>
 
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(3,1fr)",
-          gap: 20,
+          gridTemplateColumns:
+            "repeat(auto-fit,minmax(320px,1fr))",
+          gap: 25,
         }}
       >
         {cars.map((car) => (
           <div
             key={car.id}
             style={{
-              border: "1px solid #ddd",
-              borderRadius: 10,
-              padding: 15,
-              background: "white",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+              background: "#fff",
+              borderRadius: 15,
+              overflow: "hidden",
+              boxShadow:
+                "0 4px 10px rgba(0,0,0,0.1)",
             }}
           >
             <img
-              src={`https://lyon-cars-api.onrender.com/uploads/${car.image}`}
+              src={car.image}
               alt={car.name}
               style={{
                 width: "100%",
-                height: 200,
+                height: 240,
                 objectFit: "cover",
-                borderRadius: 10,
               }}
             />
 
-            <h3>
-              {car.name} - {car.price}
-            </h3>
+            <div style={{ padding: 20 }}>
+              <h2>{car.name}</h2>
 
-            <p>
-              Year: {car.year}
-              <br />
-              Engine: {car.engine}
-              <br />
-              Fuel: {car.fuel}
-              <br />
-              Transmission: {car.transmission}
-              <br />
-              Color: {car.color}
-              <br />
-              Mileage: {car.mileage}
-              <br />
-              Seats: {car.seats}
-            </p>
+              <h3 style={{ color: "#e31b23" }}>
+                {car.price}
+              </h3>
 
-            {isAdmin && (
-              <div>
+              <p>
+                Year: {car.year}
+                <br />
+                Engine: {car.engine}
+                <br />
+                Fuel: {car.fuel}
+                <br />
+                Transmission: {car.transmission}
+              </p>
+
+              <div
+                style={{
+                  display: "flex",
+                  gap: 12,
+                  marginTop: 20,
+                  flexWrap: "wrap",
+                }}
+              >
+                <Link to={`/car/${car.id}`}>
+                  <button style={viewBtn}>
+                    VIEW
+                  </button>
+                </Link>
+
+                <Link to={`/admin?id=${car.id}`}>
+                  <button style={editBtn}>
+                    EDIT
+                  </button>
+                </Link>
+
                 <button
-                  onClick={() => deleteCar(car.id)}
-                  style={{
-                    background: "#e31b23",
-                    color: "white",
-                    border: "none",
-                    padding: "12px 20px",
-                    borderRadius: 8,
-                    cursor: "pointer",
-                    marginTop: 10,
-                  }}
+                  style={deleteBtn}
+                  onClick={() =>
+                    deleteCar(car.id)
+                  }
                 >
-                  DELETE CAR
-                </button>
-
-                <button
-                  onClick={() => {
-                    localStorage.setItem("editCar", JSON.stringify(car));
-                    window.location.href = "/admin";
-                  }}
-                  style={{
-                    background: "#2563eb",
-                    color: "white",
-                    border: "none",
-                    padding: "12px 20px",
-                    borderRadius: 8,
-                    cursor: "pointer",
-                    marginTop: 10,
-                    marginLeft: 10,
-                  }}
-                >
-                  EDIT CAR
+                  DELETE
                 </button>
               </div>
-            )}
+            </div>
           </div>
         ))}
       </div>
@@ -107,65 +142,32 @@ function CarSection({ title, cars, isAdmin, deleteCar }) {
   );
 }
 
-export default function Inventory() {
-  const [cars, setCars] = useState([]);
+const viewBtn = {
+  background: "#000",
+  color: "#fff",
+  border: "none",
+  padding: "12px 20px",
+  borderRadius: 8,
+  cursor: "pointer",
+  fontWeight: "bold",
+};
 
-  const isAdmin = window.location.pathname === "/admin-inventory";
+const editBtn = {
+  background: "#2563eb",
+  color: "#fff",
+  border: "none",
+  padding: "12px 20px",
+  borderRadius: 8,
+  cursor: "pointer",
+  fontWeight: "bold",
+};
 
-  useEffect(() => {
-    fetch("https://lyon-cars-api.onrender.com/cars")
-      .then((res) => res.json())
-      .then((data) => setCars(data))
-      .catch((err) => console.log(err));
-  }, []);
-
-  const deleteCar = async (id) => {
-    const confirmDelete = window.confirm("Delete this car?");
-
-    if (!confirmDelete) return;
-
-    try {
-      const res = await fetch(`https://lyon-cars-api.onrender.com/delete-car/${id}`, {
-        method: "DELETE",
-      });
-
-      const result = await res.text();
-      alert(result);
-
-      setCars(cars.filter((car) => car.id !== id));
-    } catch (error) {
-      console.log(error);
-      alert("Delete failed");
-    }
-  };
-
-  const inStockCars = cars.filter(
-    (car) => !car.location || car.location === "in_stock"
-  );
-
-  const atPortCars = cars.filter(
-    (car) => car.location === "at_port"
-  );
-
-  return (
-    <div style={{ padding: 30 }}>
-      <h1 style={{ textAlign: "center", marginBottom: 40 }}>
-        {isAdmin ? "ADMIN INVENTORY" : "ALL VEHICLES"}
-      </h1>
-
-      <CarSection
-        title="IN STOCK"
-        cars={inStockCars}
-        isAdmin={isAdmin}
-        deleteCar={deleteCar}
-      />
-
-      <CarSection
-        title="AT THE PORT"
-        cars={atPortCars}
-        isAdmin={isAdmin}
-        deleteCar={deleteCar}
-      />
-    </div>
-  );
-}
+const deleteBtn = {
+  background: "#dc2626",
+  color: "#fff",
+  border: "none",
+  padding: "12px 20px",
+  borderRadius: 8,
+  cursor: "pointer",
+  fontWeight: "bold",
+};
